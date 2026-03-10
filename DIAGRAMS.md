@@ -115,19 +115,17 @@ The alert engine analyzes detection results and crowd conditions.
   |                    |
 
 HIGH DENSITY NORMAL
-| |
-v v
+| 
+v 
 Add Crowd Alert Continue
 |
 v
 Suspicious Object Check
 (backpack / suitcase)
-|
-----------------------
-| |
+| 
 Suspicious No Risk
-| |
-v v
+| 
+v 
 Add Security Alert Continue
 |
 v
@@ -273,11 +271,9 @@ The FastAPI backend exposes two main endpoints.
     v                 v
 
 CV Processing RAG Pipeline
-| |
-v v
+|
+v
 Event JSON AI Summary
-| |
--------------------
 |
 v
 Response
