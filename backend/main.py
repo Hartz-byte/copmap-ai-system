@@ -5,6 +5,7 @@ from backend.config import *
 from cv_pipeline.detector import ObjectDetector
 from cv_pipeline.crowd_analysis import analyze_crowd
 from alerts.alert_engine import generate_alerts
+from alerts.risk_engine import calculate_risk
 from rag.embeddings import EmbeddingModel
 from rag.vector_store import VectorStore
 from rag.rag_pipeline import RAGPipeline
@@ -28,13 +29,18 @@ def analyze_image(req: ImageRequest):
     detections = detector.detect(req.image_path)
     crowd = analyze_crowd(detections)
     alerts = generate_alerts(detections, crowd)
+    risk = calculate_risk(detections, crowd)
+
+    unattended_bags = detections.count("backpack") + detections.count("suitcase")
 
     event = {
         "location": req.location,
         "timestamp": req.timestamp,
         "detections": detections,
         "crowd": crowd,
-        "alerts": alerts
+        "unattended_bags": unattended_bags,
+        "alerts": alerts,
+        "risk": risk
     }
 
     text_event = json.dumps(event)

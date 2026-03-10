@@ -1,4 +1,5 @@
 from groq import Groq
+import json
 
 class RAGPipeline:
 
@@ -10,37 +11,43 @@ class RAGPipeline:
     def generate_summary(self, query):
         query_vec = self.embedding_model.embed(query)
         docs = self.vector_store.search(query_vec)
-        context = "\n".join(docs)
+
+        structured_events = []
+        for d in docs:
+            try:
+                structured_events.append(json.loads(d))
+            except:
+                pass
+
+        context = json.dumps(structured_events, indent=2)
 
         prompt = f"""
-        Context:
-        {context}
+You are an AI system assisting police patrol operations.
 
-        Query:
-        {query}
+You will receive structured event data in JSON.
 
-        You are an AI assistant helping police patrol analysis.
+STRICT RULES:
+- Use ONLY the numbers present in the JSON.
+- Do NOT estimate or invent numbers.
+- If a value is missing, say "not detected".
+- Treat backpacks and suitcases as unattended bag risks.
+- Ignore normal items like plants.
 
-        Use ONLY the provided event data.
+Event Data:
+{context}
 
-        Do NOT invent numbers or objects.
+Query:
+{query}
 
-        Classify risk using:
-        - Crowd density
-        - Vehicle activity
-        - Suspicious objects (weapons, unattended bags)
+Generate a patrol intelligence summary including:
 
-        Ignore normal objects like plants or handbags.
+1. Crowd situation
+2. Vehicle activity
+3. Security risks
+4. Patrol recommendation
 
-        Provide:
-
-        1. Crowd summary
-        2. Traffic activity
-        3. Security risks
-        4. Patrol recommendation
-
-        Keep the summary under 120 words.
-        """
+Limit to 100 words.
+"""
 
         response = self.client.chat.completions.create(
             model="llama-3.1-8b-instant",
@@ -50,7 +57,7 @@ class RAGPipeline:
                     "content": prompt
                 }
             ],
-            temperature=0.3
+            temperature=0.1
         )
 
         return response.choices[0].message.content
