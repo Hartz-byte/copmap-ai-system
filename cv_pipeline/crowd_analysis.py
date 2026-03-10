@@ -4,7 +4,7 @@ def analyze_crowd(detections):
 
     if person_count <= 10:
         density = "LOW"
-    elif 10 < person_count <= 20:
+    elif 10 < person_count <= 15:
         density = "MEDIUM"
     else:
         density = "HIGH"
