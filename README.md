@@ -46,25 +46,18 @@ The system follows a modular AI pipeline architecture.
 ```
 Surveillance Image
 |
-v
 Object Detection (YOLOv8)
 |
-v
 Crowd Analysis
 |
-v
 Alert Engine
 |
-v
 Risk Scoring Engine
 |
-v
 Event Storage (Vector Database)
 |
-v
 RAG Retrieval
 |
-v
 LLM Patrol Intelligence Summary
 ```
 
@@ -85,7 +78,7 @@ Detected classes include:
 - Handbag
 - Other common urban objects
 
-Object detection enables further analysis such as crowd density and suspicious object identification.
+Object detection enables further analysis, such as crowd density and suspicious object identification.
 
 ---
 
@@ -107,7 +100,7 @@ This helps identify potentially overcrowded public areas.
 
 ### 3. Suspicious Object Detection
 
-The system flags possible unattended objects such as:
+The system flags possible unattended objects, such as:
 
 - Backpacks
 - Suitcases
@@ -195,7 +188,7 @@ Crowd situation: High density with 21 people detected.
 
 Vehicle activity: Limited vehicle movement observed.
 
-Security risks: Four unattended bags detected in a crowded area.
+Security risks: Four unattended bags were detected in a crowded area.
 
 Patrol recommendation: Increase patrol presence and investigate unattended objects.
 ```
