@@ -352,7 +352,7 @@ Request
 
 ```json
 {
-  "image_path": "data/example.jpg",
+  "image_path": "data/pic4.jpg",
   "location": "Sector D Market",
   "timestamp": "2026-03-10 18:20"
 }
